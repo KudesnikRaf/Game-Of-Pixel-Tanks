@@ -7,8 +7,15 @@ export default class World {
     player2Tank = null;
     enemyTanks = [];
 
-    update() {
-        
-    }
+    update(activeKeys) {
+       
+            if (activeKeys.has('ArrowUp')) {
+                this.player1Tank.y -= 1
+            } else if (activeKeys.has('ArrowDown')) {this.player1Tank.y +=1}
+            else if (activeKeys.has('ArrowRight')) {this.player1Tank.x +=1}
+            else if (activeKeys.has('ArrowLeft')) {this.player1Tank.x -=1}
+
+         }
+
     
 }
