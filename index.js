@@ -6,7 +6,7 @@ import levels from './data/levels.js';
 
 
 const canvas = document.querySelector('canvas');
-const sprite = new Sprite('./assts/sprite.png');
+const sprite = new Sprite('./assets/sprite.png');
 
 const game = new Game({
     world: new World(),
@@ -14,6 +14,6 @@ const game = new Game({
     levels
 });
  
-game.init.then(() => game.start());
+game.init().then(() => game.start());
 
 console.log(game);
