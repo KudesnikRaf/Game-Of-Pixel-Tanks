@@ -39,7 +39,7 @@ export default class Game {
                  }
                  this.key = '';
              });
-
+             console.log(code);
         }
 
         start() {
