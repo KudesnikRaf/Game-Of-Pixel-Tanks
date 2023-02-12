@@ -10,14 +10,19 @@ export default class View {
 }
 
     update(world) {
+        this.clearScreen();
         this.renderPlayer1Tank(world.player1Tank);
     }
 
     renderPlayer1Tank(player1Tank) {
         this.context.drawImage(
             this.sprite.image,
-            0, 0, 16, 16,
-            player1Tank.x, player1Tank.y, 16, 16
+            ...player1Tank.sprite[player1Tank.direction],
+            player1Tank.x, player1Tank.y, 31, 31
            );
+    }
+
+    clearScreen() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
