@@ -38,8 +38,9 @@ export default class Game {
                         this.activeKeys.delete(event.code);
                  }
                  this.key = '';
+                 console.log(code);
              });
-             console.log(code);
+             
         }
 
         start() {

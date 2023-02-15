@@ -17,18 +17,17 @@ export default class World {
                 this.player1Tank.x += 1;
                 this.player1Tank.direction = 1;
                 this.player1Tank.animationFrame ^= 1;
-            }
-            else if (activeKeys.has('ArrowDown')) {
+            } else if (activeKeys.has('ArrowDown')) {
                 this.player1Tank.y += 1; 
                 this.player1Tank.direction = 2;
                 this.player1Tank.animationFrame ^= 1;
-            }
-            else if (activeKeys.has('ArrowLeft')) {
+            } else if (activeKeys.has('ArrowLeft')) {
                 this.player1Tank.x -= 1;  
                 this.player1Tank.direction = 3;
                 this.player1Tank.animationFrame ^= 1;
             }
-
+ 
+ 
             
-         }
-};
+        }
+}

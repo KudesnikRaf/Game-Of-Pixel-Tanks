@@ -17,4 +17,7 @@ export default class Tank {
     get sprite() {
         return this.frames[this.direction * 2 + this.animationFrame];
     }
+
+
+    
 }
