@@ -55,6 +55,6 @@ export default class Game {
             this.view.update(this.world);
             
 
-            requestAnimationFrame(this.loop);
+            //requestAnimationFrame(this.loop);
         }
 }
