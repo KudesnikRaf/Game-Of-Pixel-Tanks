@@ -17,7 +17,7 @@ export default class View {
     update(world) {
         this.clearScreen();
         this.renderLevel(world.level);
-        //this.renderPlayer1Tank(world.player1Tank);
+        this.renderPlayer1Tank(world.player1Tank);
     }
 
     renderLevel(level){
