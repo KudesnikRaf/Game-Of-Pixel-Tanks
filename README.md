@@ -12,4 +12,5 @@ ____
 ## Logotype
 [![logo.png](https://im.wampi.ru/2023/02/14/logo.png)](https://wampi.ru/image/RSDeHgQ, 'Game logotype') 
 
+## Test game come to this link -> http://127.0.0.1:3000/index.html
 
