@@ -25,9 +25,9 @@ export default class Tank {
             this._move(0, 'y', -1);
         } else if (activeKeys.has('ArrowRight') && world.canMove(this) ) {
             this._move(1, 'x', 1);
-        } else if (activeKeys.has('ArrowDown')&& world.canMove(this)) {
+        } else if (activeKeys.has('ArrowDown') && world.canMove(this)) {
             this._move(2, 'y', 1);
-        } else if (activeKeys.has('ArrowLeft')&& world.canMove(this)) {
+        } else if (activeKeys.has('ArrowLeft') && world.canMove(this)) {
             this._move(3, 'x', -1);
         }
     }
