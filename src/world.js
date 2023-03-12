@@ -19,6 +19,8 @@ export default class World {
                     return {
                         x: x * CELL_SIZE,
                         y: y * CELL_SIZE,
+                        width: CELL_SIZE,
+                        height: CELL_SIZE,
                         sprite: block 
                     };
                 });
@@ -33,36 +35,52 @@ export default class World {
         }
         
         canMove(object) {
-            const {direction, x, y, speed} = object;
+            const {direction, x, y, width, height, speed} = object;
+                
+                if (direction === Direction.UP){ 
+                    const nextY = y - speed;
 
-                if (object.direction === Direction.UP){ 
-                    const nextY = object.y - speed;
+                    const objectOnPath = this.level
+                    .reduce((result, blocks) => result.concat(...blocks), [])
+                    .find(block => 
+                        block.sprite > 0 &&
+                            nextY <= (block.y + block.height) && 
+                            (
+                                object.x > block.x &&
+                                (object.x < block.x + block.width)
+                            )
+                            //вынести метод
+                        );
+                    
+            if (objectOnPath) {
+                this.objectOnPath = objectOnPath;
+            }
 
-                if (nextY <= 0) {
+                if (objectOnPath || nextY <= 0) {
                         return false;
                     } else {
                        return true;
                     }
-             } else if (object.direction === Direction.RIGTH){
-                const nextX = object.x + speed;
+             } else if (direction === Direction.RIGTH){
+                const nextX = x + width + speed;
 
-                if (nextX >= this.size ) {
+                if (nextX >= this.size) {
                     return false;
                 } else {
                     return true;
                     }
                     
-            } else if (object.direction === Direction.DOWN){
-                const nextY = object.y + speed;
+            } else if (direction === Direction.DOWN){
+                const nextY = y + height + speed;
 
-                if (nextY <= this.size) {
+                if (nextY >= this.size) {
                     return false;
                 } else {
                     return true;
                     }
                     
-            } else if (object.direction === Direction.LEFT){
-                const nextX = object.x + speed;
+            } else if (direction === Direction.LEFT){
+                const nextX = x + speed;
                 
                 if (nextX <= 0) {
                     return false;

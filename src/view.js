@@ -15,11 +15,20 @@ export default class View {
     update(world) {
         this.clearScreen();
         this.renderLevel(world.level);
+        this.renderObjectOnPath(world.objectOnPath);
         this.renderPlayer1Tank(world.player1Tank);
     }
 
-    renderLevel(level){
-        console.log(level);
+    renderObjectOnPath(object) {
+        if(!object) return
+        this.context.rect(object.x, object.y, 
+        object.width, object.height);
+        this.context.strokeStyle = 'white';
+        this.context.stroke();
+    }
+
+    renderLevel(level) {
+       
         for (let i = 0; i < level.length; i++) {
             for (let j = 0; j < level[i].length; j++) {
                 const block = level[i][j];
