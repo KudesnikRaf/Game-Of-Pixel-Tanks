@@ -3,7 +3,7 @@ import { Direction } from './constants.js';
 export default class Tank {
     direction = Direction.UP; 
     x = 67; 
-    y = 396;
+    y = 385;
     width = 27;
     height = 26;
     speed = 1;

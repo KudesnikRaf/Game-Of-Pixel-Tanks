@@ -38,19 +38,10 @@ export default class World {
             const {direction, x, y, width, height, speed} = object;
                 
                 if (direction === Direction.UP){ 
-                    const nextY = y - speed;
+                    const nextY = y - 1;
 
-                    const objectOnPath = this.level
-                    .reduce((result, blocks) => result.concat(...blocks), [])
-                    .find(block => 
-                        block.sprite > 0 &&
-                            nextY <= (block.y + block.height) && 
-                            (
-                                object.x > block.x &&
-                                (object.x < block.x + block.width)
-                            )
-                            //вынести метод
-                        );
+                
+            const objectOnPath = this._getObjectOnPath(object)
                     
             if (objectOnPath) {
                 this.objectOnPath = objectOnPath;
@@ -62,7 +53,7 @@ export default class World {
                        return true;
                     }
              } else if (direction === Direction.RIGTH){
-                const nextX = x + width + speed;
+                const nextX = x + width + 1;
 
                 if (nextX >= this.size) {
                     return false;
@@ -71,7 +62,7 @@ export default class World {
                     }
                     
             } else if (direction === Direction.DOWN){
-                const nextY = y + height + speed;
+                const nextY = y + height + 1;
 
                 if (nextY >= this.size) {
                     return false;
@@ -80,7 +71,7 @@ export default class World {
                     }
                     
             } else if (direction === Direction.LEFT){
-                const nextX = x + speed;
+                const nextX = x + 1;
                 
                 if (nextX <= 0) {
                     return false;
@@ -90,5 +81,32 @@ export default class World {
                     
             }
              
+      }
+          _getObjectOnPath(object) {
+            function isBetween(p, p1, p2) {
+                return p > p1 && p > p2;
+            }
+
+            function isSame(p1, p2) {
+                return p1 === p2;
+            }
+
+         return this.level
+        .reduce((result, blocks) => result.concat(...blocks), [])
+        .find(block => 
+            block.sprite > 0 &&
+                (
+                    isSame(object.y, block.y) ||
+                    isBetween(nextY, block.y, block.y + block.height) ||
+                   isBetween(object.y + object.height, block.y, block.y + block.height)
+                )
+                &&
+                (
+                    isSame(object.x, block.x) ||
+                    isBetween(object.x, block.x + block.width) ||
+                    isBetween(object.x + object.width, block.x, block.x + block.width)
+                )
+                //вынести метод
+            );
       }
 }
