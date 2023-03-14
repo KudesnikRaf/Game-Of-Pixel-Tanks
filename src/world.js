@@ -19,8 +19,8 @@ export default class World {
                     return {
                         x: x * CELL_SIZE,
                         y: y * CELL_SIZE,
-                        width: CELL_SIZE,
-                        height: CELL_SIZE,
+                        width: 32,
+                        height: 32,
                         sprite: block 
                     };
                 });
@@ -35,44 +35,67 @@ export default class World {
         }
         
         canMove(object) {
-            const {direction, x, y, width, height, speed} = object;
-                
-                if (direction === Direction.UP){ 
-                    const nextY = y - 1;
+            const {direction, x, y, width, height} = object;
+            
+            
 
-                
-            const objectOnPath = this._getObjectOnPath(object)
-                    
-            if (objectOnPath) {
-                this.objectOnPath = objectOnPath;
-            }
+            if (direction === Direction.UP){ 
+                const nextY = y - 1;
 
-                if (objectOnPath || nextY <= 0) {
+                const objectOnPath = this._getObjectOnY(object, nextY);
+
+                if (objectOnPath) {
+                    this.objectOnPath = objectOnPath;
+                    return false;
+                 }
+                if (nextY <= 0) {
                         return false;
                     } else {
                        return true;
                     }
+                    
              } else if (direction === Direction.RIGTH){
-                const nextX = x + width + 1;
+                const nextX = x + 1;
 
-                if (nextX >= this.size) {
+                const objectOnPath = this._getObjectOnX(object, nextX);
+
+                if (objectOnPath) {
+                    this.objectOnPath = objectOnPath;
+                    return false;
+                 }
+
+                if ((nextX + width) >= this.size) {
                     return false;
                 } else {
                     return true;
                     }
                     
             } else if (direction === Direction.DOWN){
-                const nextY = y + height + 1;
+                const nextY = y + 1;
+                
+                const objectOnPath = this._getObjectOnY(object, nextY);
 
-                if (nextY >= this.size) {
+                if (objectOnPath) {
+                    this.objectOnPath = objectOnPath;
+                    return false;
+                 }
+
+                if ((nextY + height)>= this.size) {
                     return false;
                 } else {
                     return true;
                     }
                     
             } else if (direction === Direction.LEFT){
-                const nextX = x + 1;
+                const nextX = x - 1;
                 
+                const objectOnPath = this._getObjectOnX(object, nextX);
+
+                if (objectOnPath) {
+                    this.objectOnPath = objectOnPath;
+                    return false;
+                 }
+
                 if (nextX <= 0) {
                     return false;
                 } else {
@@ -82,31 +105,54 @@ export default class World {
             }
              
       }
-          _getObjectOnPath(object) {
-            function isBetween(p, p1, p2) {
-                return p > p1 && p > p2;
-            }
-
-            function isSame(p1, p2) {
-                return p1 === p2;
-            }
-
-         return this.level
-        .reduce((result, blocks) => result.concat(...blocks), [])
-        .find(block => 
-            block.sprite > 0 &&
+        _getObjectOnX(object, nextX) {
+    
+            return this.level
+            .reduce((result, blocks) => result.concat(...blocks), [])
+            .find(block => 
+                block.sprite > 0 &&
                 (
                     isSame(object.y, block.y) ||
-                    isBetween(nextY, block.y, block.y + block.height) ||
-                   isBetween(object.y + object.height, block.y, block.y + block.height)
+                    isBetween(object.y, block.y, block.y + block.height) ||
+                    isBetween(object.y + object.height, block.y, block.y + block.height)
                 )
                 &&
                 (
-                    isSame(object.x, block.x) ||
-                    isBetween(object.x, block.x + block.width) ||
-                    isBetween(object.x + object.width, block.x, block.x + block.width)
+                    isSame(nextX, block.x) ||
+                    isBetween(nextX, block.x + block.width) ||
+                    isBetween(nextX + object.width, block.x, block.x + block.width)
                 )
                 //вынести метод
             );
       }
+
+      _getObjectOnY(object, nextY) {
+
+            return this.level
+        .reduce((result, blocks) => result.concat(...blocks), [])
+        .find(block => 
+            block.sprite > 0 &&
+            (
+                isSame(nextY, block.y) ||
+                isBetween(nextY, block.y, block.y + block.height) ||
+                isBetween(nextY + object.height, block.y, block.y + block.height)
+            )
+            &&
+            (
+                isSame(object.x, block.x) ||
+                isBetween(object.x, block.x + block.width) ||
+                isBetween(object.x + object.width, block.x, block.x + block.width)
+            )
+            //вынести метод
+        );
+  }
+      
+}
+
+function isBetween(p, p1, p2) {
+    return p > p1 && p > p2;
+}
+
+function isSame(p1, p2) {
+    return p1 === p2;
 }
